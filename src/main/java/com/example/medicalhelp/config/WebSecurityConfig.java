@@ -20,6 +20,7 @@ public class WebSecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .csrf((csrf) -> csrf.disable())
+                .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }

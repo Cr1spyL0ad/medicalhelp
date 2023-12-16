@@ -1,9 +1,9 @@
-<#macro pageTemplate title>
+<#macro pageTemplate>
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Organizer</title>
+        <title>Запись к врачу</title>
         <link rel="stylesheet" type="text/css" href="/css/style.x18418.css"/>
     </head>
     <body>

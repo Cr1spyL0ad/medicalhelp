@@ -42,14 +42,13 @@ public class PatientModel implements UserDetails {
 
     private Integer age;
 
-    @Size( min = 15, max = 16)
+    @Size( min = 15, max = 17)
     private Long policyNumber;
 
     @Size(min = 9, max = 10)
     private Long passportNumber;
 
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-mm-yyyy")
     private Date dateOfBirth;
 
 

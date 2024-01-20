@@ -6,12 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,9 +52,12 @@ public class PatientModel implements UserDetails {
     private Long passportNumber;
 
     @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
-
-
+    private LocalDate dateOfBirth;
+    public void setAge() {
+        LocalDate dateNow = LocalDate.now();
+        Period period = Period.between(dateOfBirth, dateNow);
+        age = period.getYears();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

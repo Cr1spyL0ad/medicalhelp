@@ -16,9 +16,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authz) -> authz
-                        .anyRequest().permitAll()
-                )
+                .authorizeHttpRequests((auth) -> auth.requestMatchers("/profile").hasAnyRole("PATIENT","DOCTOR").anyRequest().permitAll())
+
                 .csrf((csrf) -> csrf.disable())
                 .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
                 .httpBasic(Customizer.withDefaults());

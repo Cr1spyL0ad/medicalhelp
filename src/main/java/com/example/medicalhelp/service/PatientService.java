@@ -29,6 +29,7 @@ public class PatientService implements UserDetailsService {
         if (userFromDb != null) {
             return false;
         }
+        user.setAge();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         patientRepository.save(user);
         return true;

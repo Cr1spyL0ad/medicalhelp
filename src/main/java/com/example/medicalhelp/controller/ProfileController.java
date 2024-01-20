@@ -13,14 +13,7 @@ public class ProfileController {
     @GetMapping("/profile")
     public String productInfo(Model model) {
         model.addAttribute("auth", authChecker.getAuth());
-        if (authChecker.getAuth().equals("PATIENT")) {
-            model.addAttribute("user", authChecker.getPatient());
-            return "profile";
-        } else if (authChecker.getAuth().equals("DOCTOR")) {
-            model.addAttribute("user", authChecker.getDoctor());
-            return "profile";
-        }
-        return "redirect:/";
-
+        model.addAttribute("user", authChecker.getPatient());
+        return "profile";
     }
 }

@@ -10,8 +10,6 @@ public class AuthChecker {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_PATIENT"))) {
             return "PATIENT";
-        } else if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_DOCTOR"))) {
-            return "DOCTOR";
         }
         return "ANONYMOUS";
     }
@@ -20,7 +18,4 @@ public class AuthChecker {
         return (PatientModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public DoctorModel getDoctor() {
-        return (DoctorModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
 }

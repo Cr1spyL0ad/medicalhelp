@@ -1,4 +1,4 @@
-<#import "common.ftlh" as common>
+<#import "common.ftl" as common>
 <@common.pageTemplate>
     <h2>${user.name}</h2>
     <h2>${user.dateOfBirth}</h2>

@@ -1,10 +1,8 @@
 package com.example.medicalhelp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,6 +30,16 @@ public class SlotModel {
 
     public void setTime() {
         time = LocalDateTime.of(unfinishedDate, LocalTime.parse(unfinishedTime, DateTimeFormatter.ofPattern("HH:mm:ss")));
+    }
+
+    @Setter
+    @Getter
+    @ToString
+    public static class SlotTable {
+        private String name;
+        private int cabinet;
+        private String time;
+        private long slotId;
     }
 
     public void reset(){

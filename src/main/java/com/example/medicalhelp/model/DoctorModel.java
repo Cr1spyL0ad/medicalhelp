@@ -25,14 +25,11 @@ import java.util.List;
 public class DoctorModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false)
     private Long id;
-
     private String name;
-
     private String specialization;
-
     private Integer cabinetNumber;
 
 }

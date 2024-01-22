@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface DoctorRepository extends JpaRepository<DoctorModel, Long> {
+    DoctorModel findFirstById(Long id);
     List<DoctorModel> findAllBySpecialization(String specialization);
 }

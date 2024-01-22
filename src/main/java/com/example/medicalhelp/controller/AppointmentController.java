@@ -2,6 +2,7 @@ package com.example.medicalhelp.controller;
 
 import com.example.medicalhelp.model.SlotModel;
 import com.example.medicalhelp.repository.DoctorRepository;
+import com.example.medicalhelp.repository.SlotRepository;
 import com.example.medicalhelp.service.SlotService;
 import com.example.medicalhelp.utils.AuthChecker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Controller
 public class AppointmentController {
@@ -21,6 +23,9 @@ public class AppointmentController {
     DoctorRepository doctorRepository;
     @Autowired
     SlotService slotService;
+    @Autowired
+    SlotRepository slotRepository;
+    Boolean noDoctor;
 
     SlotModel slot = new SlotModel();
     @GetMapping("/appointment")
@@ -29,6 +34,11 @@ public class AppointmentController {
         if (auth.equals("ANONYMOUS")) {
             return "redirect:/login";
         }
+        if (slotRepository.findAllByPatientIdAndTimeAfter(checker.getPatient().getId(), LocalDateTime.now()).size() > 2) {
+            return "redirect:/tooManySlots";
+        }
+        model.addAttribute("noDoctor", noDoctor);
+        noDoctor = null;
         model.addAttribute("auth", auth);
         return "specialization";
     }
@@ -39,6 +49,13 @@ public class AppointmentController {
         String auth = checker.getAuth();
         if (auth.equals("ANONYMOUS")) {
             return "redirect:/login";
+        }
+        if (slotRepository.findAllByPatientIdAndTimeAfter(checker.getPatient().getId(), LocalDateTime.now()).size() > 2) {
+            return "redirect:/tooManySlots";
+        }
+        else if(doctorRepository.findAllBySpecialization(spec).isEmpty()) {
+            noDoctor = true;
+            return "redirect:/appointment";
         }
         model.addAttribute("slotForm", slot);
         model.addAttribute("doctorList", doctorRepository.findAllBySpecialization(spec));
@@ -55,8 +72,8 @@ public class AppointmentController {
 
     @PostMapping("/chooseTime")
     public String takeSlot(@ModelAttribute("slot") SlotModel slotForm, Model model) {
-        System.out.println(slotForm.getUnfinishedDate());
         slotService.saveSlot(slotForm);
+        slot.reset();
         return "redirect:/";
     }
 
@@ -67,13 +84,15 @@ public class AppointmentController {
         if (auth.equals("ANONYMOUS")) {
             return "redirect:/login";
         }
+        if (slotRepository.findAllByPatientIdAndTimeAfter(checker.getPatient().getId(), LocalDateTime.now()).size() > 2) {
+            return "redirect:/tooManySlots";
+        }
         if(slot.getDoctorId() == null) {
             return "redirect:/appointment";
         }
         model.addAttribute("slot", slot);
         model.addAttribute("timeList" ,slotService.getFreeSlots(slot.getDoctorId(), slot.getUnfinishedDate()));
         model.addAttribute("auth", auth);
-        slot.reset();
         return "schedule";
     }
 }

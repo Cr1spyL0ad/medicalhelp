@@ -1,9 +1,13 @@
 package com.example.medicalhelp.service;
 
+import com.example.medicalhelp.model.DoctorModel;
 import com.example.medicalhelp.model.PatientModel;
 import com.example.medicalhelp.model.SlotModel;
+import com.example.medicalhelp.repository.DoctorRepository;
 import com.example.medicalhelp.repository.SlotRepository;
 import com.example.medicalhelp.utils.AuthChecker;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,8 @@ import java.util.stream.Collectors;
 public class SlotService {
     @Autowired
     SlotRepository slotRepository;
+    @Autowired
+    DoctorRepository doctorRepository;
     AuthChecker authChecker = new AuthChecker();
     public LocalDate getMinimumDate() {
         LocalDate currentDate = LocalDate.now();
@@ -61,4 +67,20 @@ public class SlotService {
         }
         return freeTimeList;
     }
+
+    public List<SlotModel.SlotTable> getUserSlots(List<SlotModel> slotList) {
+        List<SlotModel.SlotTable> tableList = new ArrayList<>();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        for( SlotModel slot: slotList) {
+            DoctorModel doctor = doctorRepository.findFirstById(slot.getDoctorId());
+            SlotModel.SlotTable slotTable = new SlotModel.SlotTable();
+            slotTable.setTime(slot.getTime().format(dateTimeFormatter));
+            slotTable.setSlotId(slot.getId());
+            slotTable.setName(doctor.getName());
+            slotTable.setCabinet(doctor.getCabinetNumber());
+            tableList.add(slotTable);
+        }
+        return tableList;
+    }
+
 }

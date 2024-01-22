@@ -1,14 +1,12 @@
 package com.example.medicalhelp.controller;
 
 import com.example.medicalhelp.model.DoctorModel;
-import com.example.medicalhelp.model.SlotModel;
 import com.example.medicalhelp.repository.DoctorRepository;
 import com.example.medicalhelp.repository.SlotRepository;
 import com.example.medicalhelp.utils.AuthChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;

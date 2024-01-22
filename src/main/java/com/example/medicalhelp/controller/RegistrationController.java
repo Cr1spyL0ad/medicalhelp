@@ -29,12 +29,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@ModelAttribute("userForm") @Valid PatientModel userForm, BindingResult bindingResult, Model model) {
+    public String addUser(@ModelAttribute("userForm") @Valid PatientModel userForm, Model model) {
         model.addAttribute("auth", util.getAuth());
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("sizeError", "Логин и пароль должны быть от 6 символов");
-            return "registration";
-        }
         if (!userForm.getPassword().equals(userForm.getConfirmedPassword())) {
             model.addAttribute("passwordError", "Пароли не совпадают");
             return "registration";

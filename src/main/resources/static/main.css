@@ -229,7 +229,7 @@ h1 a {
 
 .usersTable {
     border-collapse: collapse;
-    margin: 0 auto;
+    margin: 30px auto 0;
 }
 
 .tableHeader td {

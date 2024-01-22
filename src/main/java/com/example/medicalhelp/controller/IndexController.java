@@ -26,4 +26,10 @@ public class IndexController {
         model.addAttribute("noSlots", true);
         return "index";
     }
+    @GetMapping("/success")
+    public String success(Model model) {
+        model.addAttribute("auth", authChecker.getAuth());
+        model.addAttribute("success", true);
+        return "index";
+    }
 }

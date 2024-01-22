@@ -2,11 +2,8 @@ package com.example.medicalhelp.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name="slots")
@@ -27,10 +24,6 @@ public class SlotModel {
     private LocalDate unfinishedDate;
     @Transient
     private String unfinishedTime;
-
-    public void setTime() {
-        time = LocalDateTime.of(unfinishedDate, LocalTime.parse(unfinishedTime, DateTimeFormatter.ofPattern("HH:mm:ss")));
-    }
 
     @Setter
     @Getter

@@ -74,7 +74,7 @@ public class AppointmentController {
     public String takeSlot(@ModelAttribute("slot") SlotModel slotForm, Model model) {
         slotService.saveSlot(slotForm);
         slot.reset();
-        return "redirect:/";
+        return "redirect:/success";
     }
 
 
